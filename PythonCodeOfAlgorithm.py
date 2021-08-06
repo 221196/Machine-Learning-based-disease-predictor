@@ -300,67 +300,6 @@ def randomforest():
         #printing scatter plot of disease predicted vs its symptoms
         scatterplt(pred2.get())
            
-pred4=StringVar()
-def KNN():
-    if len(NameEn.get()) == 0:
-        pred1.set(" ")
-        comp=messagebox.askokcancel("System","Kindly Fill the Name")
-        if comp:
-            root.mainloop()
-    elif((Symptom1.get()=="Select Here") or (Symptom2.get()=="Select Here")):
-        pred1.set(" ")
-        sym=messagebox.askokcancel("System","Kindly Fill atleast first two Symptoms")
-        if sym:
-            root.mainloop()
-    else:
-        from sklearn.neighbors import KNeighborsClassifier
-        knn=KNeighborsClassifier(n_neighbors=5,metric='minkowski',p=2)
-        knn=knn.fit(X,np.ravel(y))
-    
-        from sklearn.metrics import classification_report,confusion_matrix,accuracy_score
-        y_pred=knn.predict(X_test)
-        print("KNN")
-        print("Accuracy")
-        print(accuracy_score(y_test, y_pred))
-        print(accuracy_score(y_test, y_pred,normalize=False))
-        print("Confusion matrix")
-        conf_matrix=confusion_matrix(y_test,y_pred)
-        print(conf_matrix)
-
-        psymptoms = [Symptom1.get(),Symptom2.get(),Symptom3.get(),Symptom4.get(),Symptom5.get()]
-
-        for k in range(0,len(l1)):
-            for z in psymptoms:
-                if(z==l1[k]):
-                    l2[k]=1
-
-        inputtest = [l2]
-        predict = knn.predict(inputtest)
-        predicted=predict[0]
-
-        h='no'
-        for a in range(0,len(disease)):
-            if(predicted == a):
-                h='yes'
-                break
-
-
-        if (h=='yes'):
-            pred4.set(" ")
-            pred4.set(disease[a])
-        else:
-            pred4.set(" ")
-            pred4.set("Not Found")
-        import sqlite3 
-        conn = sqlite3.connect('database.db') 
-        c = conn.cursor() 
-        c.execute("CREATE TABLE IF NOT EXISTS KNearestNeighbour(Name StringVar,Symtom1 StringVar,Symtom2 StringVar,Symtom3 StringVar,Symtom4 TEXT,Symtom5 TEXT,Disease StringVar)")
-        c.execute("INSERT INTO KNearestNeighbour(Name,Symtom1,Symtom2,Symtom3,Symtom4,Symtom5,Disease) VALUES(?,?,?,?,?,?,?)",(NameEn.get(),Symptom1.get(),Symptom2.get(),Symptom3.get(),Symptom4.get(),Symptom5.get(),pred4.get()))
-        conn.commit()  
-        c.close() 
-        conn.close()
-         #printing scatter plot of disease predicted vs its symptoms
-        scatterplt(pred4.get())
 
 pred3=StringVar()
 def NaiveBayes():
@@ -463,7 +402,7 @@ def Reset():
     pred1.set(" ")
     pred2.set(" ")
     pred3.set(" ")
-    pred4.set(" ")
+   
     try:
         prev_win.destroy()
         prev_win=None
@@ -525,9 +464,7 @@ ranfLb = Label(root, text="NaiveBayes", fg="White", bg="green", width = 20)
 ranfLb.config(font=("Times",15,"bold italic"))
 ranfLb.grid(row=19, column=0, pady=10, sticky=W)
 
-knnLb = Label(root, text="kNearestNeighbour", fg="Red", bg="Sky Blue", width = 20)
-knnLb.config(font=("Times",15,"bold italic"))
-knnLb.grid(row=21, column=0, pady=10, sticky=W)
+
 OPTIONS = sorted(l1)
 
 #Taking name as input from user
@@ -563,9 +500,7 @@ lr = Button(root, text="Prediction 3", command=NaiveBayes,bg="Blue",fg="white")
 lr.config(font=("Times",15,"bold italic"))
 lr.grid(row=8, column=3,padx=10)
 
-kn = Button(root, text="Prediction 4", command=KNN,bg="sky blue",fg="red")
-kn.config(font=("Times",15,"bold italic"))
-kn.grid(row=9, column=3,padx=10)
+
 
 rs = Button(root,text="Reset Inputs", command=Reset,bg="yellow",fg="purple",width=15)
 rs.config(font=("Times",15,"bold italic"))
@@ -585,8 +520,7 @@ t2=Label(root,font=("Times",15,"bold italic"),text="Random Forest",height=1,bg="
 t3=Label(root,font=("Times",15,"bold italic"),text="Naive Bayes",height=1,bg="red"
          ,width=40,fg="orange",textvariable=pred3,relief="sunken").grid(row=19, column=1, padx=10)
 
-t4=Label(root,font=("Times",15,"bold italic"),text="kNearest Neighbour",height=1,bg="Blue"
-         ,width=40,fg="yellow",textvariable=pred4,relief="sunken").grid(row=21, column=1, padx=10)
+
 
 #calling this function because the application is ready to run
 root.mainloop()
