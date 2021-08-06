@@ -1,8 +1,9 @@
-Requirement
-Functional Requirements
-predict disease with given symptoms
+# Requirement
+# Functional Requirements
+
+ predict disease with given symptoms
 Compare given symptoms with input dataset
 
-Non-Functional Requirements
+# Non-Functional Requirements
 Display list of symptoms where user can select the symptoms
 more than 2 Algorithms were used to predict disease
