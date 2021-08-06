@@ -35,8 +35,9 @@ user need to enter the symptoms at max 5 symptoms can be entered. There is drop 
 # Detail requirements
 
 High Level Requirements:
+
  1)List of symptoms 
- 2)Inalising model
+ 2)Analising model
  3)Achieving accuracy more than 90%
 
 Low Level Requirements:
